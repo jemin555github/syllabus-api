@@ -7,7 +7,6 @@ class User(BaseModel):
 
 class UserLogin(BaseModel):
     email: EmailStr
-    user_name: str
     password: constr(min_length=6)
 
 class AddUser(BaseModel):

@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from database.database import get_db
 from src.api.v1.auth.schema import AddUser, UserLogin
 from src.api.v1.auth.service import AuthServices
-from src.utils.response_utils import Response
 
 auth_router = APIRouter()
 
