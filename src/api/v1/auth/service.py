@@ -29,11 +29,15 @@ class AuthServices:
         saved_user = UserCrud.add_user(user_data, db)
 
         return Response(
-                data={"Id":saved_user.id, "Email": saved_user.email},
-                status_code=200,
-                success=True,
-                message='User Added..'
-            ).send_success_response()
+            data={
+                "Id": saved_user.id,
+                "Email": saved_user.email,
+                "Created At": str(saved_user.created_at)  # Add this line
+            },
+            status_code=200,
+            success=True,
+            message='User Added..'
+        ).send_success_response()
 
     @staticmethod
     def signin(user_data, db):

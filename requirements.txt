@@ -8,3 +8,7 @@ passlib~=1.7.4
 alembic~=1.15.2
 PyJWT~=2.10.1
 pytz~=2025.2
+pydantic[email]
+pymysql
+jose~=1.0.0
+bcrypt

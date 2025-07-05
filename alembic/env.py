@@ -4,6 +4,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+from src.api.v1.auth import models  # adjust if your model is elsewhere
+from src.api.v1.medias import models  # adjust if your model is elsewhere
 
 #-----------------------add code--------------------#
 
@@ -41,7 +43,7 @@ fileConfig(config.config_file_name)
 
 #-----------------------add code--------------------#
 
-from database.base import Base
+from database.database import Base
 
 target_metadata = Base.metadata
 
