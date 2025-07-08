@@ -40,4 +40,8 @@ pip install -r requirements.txt
 # to run this project
 python main.py
 
-you have to make .env file for configurations
+you have to make .env file for configurations...
+
+python version 3.10
+to test api environment visit localhost:8000/docs in browser or you can check how to open swagger to test api.
+
