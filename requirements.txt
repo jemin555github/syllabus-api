@@ -12,3 +12,6 @@ pydantic[email]
 pymysql
 jose~=1.0.0
 bcrypt
+python-jose~=3.5.0
+gspread~=6.2.1
+oauth2client~=4.1.3
