@@ -89,7 +89,7 @@ class GoogleSheetService:
         # Header row (1st row)
         header = [
             "First Name", "Last Name", "Email", "Age", "State", "Country",
-            "Phone Number", "Language", "Password", "Role", "User ID", "Created At"
+            "Phone Number", "Language", "Password", "Role", "Grade", "Unique ID", "Created At"
         ]
         if sheet.row_values(1) != header:
             sheet.insert_row(header, index=1)
@@ -97,9 +97,9 @@ class GoogleSheetService:
         # Data row
         row = [
             user.first_name, user.last_name, user.email, user.age,
-            user.state, user.country, user.phone_number,
+            user.state, user.country, user.phone,
             user.language, user.password, user.role or "user",
-            user_id, created_at
+            user.grade, user.unique_id[:10], created_at
         ]
         sheet.append_row(row)
 

@@ -10,6 +10,7 @@ PyJWT~=2.10.1
 pytz~=2025.2
 pydantic[email]
 pymysql
+psycopg2-binary
 jose~=1.0.0
 bcrypt
 python-jose~=3.5.0

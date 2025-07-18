@@ -12,7 +12,7 @@ class UserRole(str, Enum):
 # Base user info for display
 
 class User(BaseModel):
-    id: int
+    unique_id: str
     first_name: str
     last_name: str
     email: EmailStr
@@ -26,7 +26,7 @@ class User(BaseModel):
 
 # Schema for login
 class UserLogin(BaseModel):
-    email: EmailStr
+    user_id: str
     password: constr(min_length=6)
 
 # Schema for basic user registration
@@ -37,9 +37,10 @@ class AddUser(BaseModel):
     age: int
     state: str
     country: Optional[str] = "India"
-    phone_number: str
+    phone: str
     language: str
     password: str
+    grade: str
     role: Optional[str] = "user"
 
 
@@ -50,8 +51,9 @@ class UserCreate(BaseModel):
     age: int
     state: str
     country: Optional[str] = Field(default="India")
-    phone_number: str
+    phone: str
     language: str
     email: EmailStr
     password: constr(min_length=6)
+    grade: str
     role: Optional[UserRole] = Field(default=UserRole.user)

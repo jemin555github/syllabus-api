@@ -5,6 +5,7 @@ from src.api.v1.auth.crud import UserCrud
 from src.utils.tokenization import create_access_token
 from fastapi import Depends, HTTPException, status
 from jose import jwt, JWTError
+from sqlalchemy import or_
 import os
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
@@ -21,16 +22,17 @@ class AuthServices:
         if is_email:
             return Response(
                 data=user_data.email,
-                status_code=200,
+                status_code=403,
                 success=True,
                 message='Email Already Present'
             ).send_success_response()
 
         saved_user = UserCrud.add_user(user_data, db)
-
+        print('saved_user', saved_user.unique_id)
+        #breakpoint()
         return Response(
             data={
-                "Id": saved_user.id,
+                "Unique_ID": saved_user.unique_id,
                 "Email": saved_user.email,
                 "Created At": str(saved_user.created_at)  # Add this line
             },
@@ -41,32 +43,27 @@ class AuthServices:
 
     @staticmethod
     def signin(user_data, db):
-        email = user_data.email
-
-        is_email = db.query(User).filter(User.email == email).first()
-        if not is_email:
+        user_id = user_data.user_id
+        is_user_id = db.query(User).filter(or_(User.email == user_id, User.unique_id == user_id)).first()        
+        if not is_user_id:
             return Response(
                 data=user_data.email,
                 status_code=404,
                 success=True,
                 message='Email Not Present'
             ).send_success_response()
-
         is_verified, current_user = UserCrud.verify_user(user_data, db)
         if is_verified:
-            user_data_dict = {"email":current_user.email, "id":current_user.id}
-            token = create_access_token(user_data_dict)
-            current_user = AuthServices.get_current_user(token)
-            return Response(
-                    data={"token":token, 'user_data':current_user},
-                    status_code=200,
-                    success=True,
-                    message='Auth Succeed'
-                ).send_success_response()
+             return Response(
+                data={'email':current_user.email,'grade':current_user.grade},
+                status_code=200,
+                success=True,
+                message='Login Successfull..'
+            ).send_success_response()
         else:
             return Response(
-                data=email,
-                status_code=403,
+                data=user_id,
+                status_code=401,
                 success=True,
                 message='Wrong Password or credentials'
             ).send_success_response()

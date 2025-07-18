@@ -45,3 +45,26 @@ you have to make .env file for configurations...
 python version 3.10
 to test api environment visit localhost:8000/docs in browser or you can check how to open swagger to test api.
 
+
+//Install pgAdmin4 for DB Viewer
+https://www.postgresql.org/ftp/pgadmin/pgadmin4/v9.5/macos/
+
+// Install postgres for DB 
+brew install postgresql@15
+export LDFLAGS="-L/usr/local/opt/postgresql@15/lib"
+export CPPFLAGS="-I/usr/local/opt/postgresql@15/include"
+brew services start postgresql@15
+
+####To start postgres
+psql postgres
+psql --version
+
+CREATE USER your_username WITH PASSWORD 'your_password';
+ALTER USER your_username WITH SUPERUSER;
+CREATE DATABASE your_db OWNER your_username;
+
+pip install psycopg2-binary (if not installed)
+
+###Data migration to pgadmin4 (delete all version from pgadmin4)
+alembic revision --autogenerate -m "models.py creation"
+alembic upgrade head

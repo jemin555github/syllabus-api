@@ -121,8 +121,8 @@ class MediaServices:
     @staticmethod
     def get_media_for_user(token, db):
         user_data = AuthServices.get_current_user(token)
-        user_id = user_data.get("id")
-        user = db.query(User).filter(User.id == user_id).first()
+        user_unique_id = user_data.get("unique_id")
+        user = db.query(User).filter(User.unique_id == user_unique_id).first()
         if not user:
             return Response(
                 data=None,
