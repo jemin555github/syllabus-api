@@ -27,7 +27,7 @@ class User(BaseModel):
 # Schema for login
 class UserLogin(BaseModel):
     user_id: str
-    password: constr(min_length=6)
+    password: str
 
 # Schema for basic user registration
 class AddUser(BaseModel):
@@ -54,6 +54,6 @@ class UserCreate(BaseModel):
     phone: str
     language: str
     email: EmailStr
-    password: constr(min_length=6)
+    password: str
     grade: str
     role: Optional[UserRole] = Field(default=UserRole.user)
