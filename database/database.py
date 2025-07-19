@@ -13,7 +13,7 @@ Base = declarative_base()
 
 # Create database URL from environment variables
 db_url = f"postgresql+psycopg2://{os.getenv('db_user')}:{os.getenv('db_password')}@{os.getenv('db_host')}:{os.getenv('db_port')}/{os.getenv('db_database')}"
-
+print('db_url', db_url)
 # Create engine and session
 try:
     engine = create_engine(db_url)
