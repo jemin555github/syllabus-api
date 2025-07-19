@@ -47,10 +47,10 @@ class AuthServices:
         is_user_id = db.query(User).filter(or_(User.email == user_id, User.unique_id == user_id)).first()        
         if not is_user_id:
             return Response(
-                data=user_data.email,
+                data=user_data.user_id,
                 status_code=404,
                 success=True,
-                message='Email Not Present'
+                message='Email or ID Not Present'
             ).send_success_response()
         is_verified, current_user = UserCrud.verify_user(user_data, db)
         if is_verified:
