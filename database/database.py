@@ -5,41 +5,33 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import OperationalError
 from dotenv import load_dotenv
 
+# Load environment variables from .env
 load_dotenv()
 
+# Base class for SQLAlchemy models
 Base = declarative_base()
 
+# Create database URL from environment variables
 db_url = f"postgresql+psycopg2://{os.getenv('db_user')}:{os.getenv('db_password')}@{os.getenv('db_host')}:{os.getenv('db_port')}/{os.getenv('db_database')}"
 
+# Create engine and session
 try:
     engine = create_engine(db_url)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     # Test connection
     with engine.connect() as conn:
-        conn.execute(text("SELECT 1"))  # ✅ wrap raw SQL in text()
-except OperationalError:
-    print("⚠️ Database connection failed. Using DummySession.")
-    engine = None
-    SessionLocal = None
+        conn.execute(text("SELECT 1"))
+    print("✅ Database connected successfully.")
+
+except OperationalError as e:
+    raise RuntimeError("❌ Database connection failed.") from e
 
 
-class DummySession:
-    """ A dummy session that safely ignores DB calls. """
-
-    def __getattr__(self, name):
-        def dummy_func(*args, **kwargs):
-            return None
-
-        return dummy_func
-
-
+# Dependency to get a DB session
 def get_db():
-    if SessionLocal:
-        db_session = SessionLocal()
-        try:
-            yield db_session
-        finally:
-            db_session.close()
-    else:
-        yield DummySession()
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
