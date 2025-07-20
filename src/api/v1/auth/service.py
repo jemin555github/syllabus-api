@@ -34,6 +34,7 @@ class AuthServices:
             data={
                 "Unique_ID": saved_user.unique_id,
                 "Email": saved_user.email,
+                'grade':saved_user.grade,
                 "Created At": str(saved_user.created_at)  # Add this line
             },
             status_code=200,
