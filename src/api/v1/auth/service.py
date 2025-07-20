@@ -55,7 +55,9 @@ class AuthServices:
         is_verified, current_user = UserCrud.verify_user(user_data, db)
         if is_verified:
              return Response(
-                data={'email':current_user.email,'grade':current_user.grade},
+                data={'email':current_user.email,
+                       "Unique_ID": current_user.unique_id,
+                      'grade':current_user.grade},
                 status_code=200,
                 success=True,
                 message='Login Successfull..'
